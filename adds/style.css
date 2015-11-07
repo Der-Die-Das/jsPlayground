@@ -1,0 +1,79 @@
+@font-face { font-family: "pixel"; src: url(../font/ADDSBP__.TTF) format("truetype"); }
+
+
+@-webkit-keyframes fadeIn{
+	from {top:-50%; left:40%;}
+	to {top:0%; left:40%;}
+}
+@-webkit-keyframes fadeOut{
+	from {top:0%; left:40%;}
+	to {top:-50%; left:40%;}
+}
+body{
+	margin: 0;
+	background-image: url(../img/background.jpg);
+	background-size: auto;
+	background-repeat: no-repeat;
+}
+#menu{
+	position: absolute;
+	left: 40%;
+	height: 50%;
+	width: 20%;
+	border: 1px black solid;
+	background-image: url(); background-color: darkred;
+}
+#class{
+	position: absolute;
+	left: 40%;
+	top: 0%;
+	height: 50%;
+	width: 20%;
+	border: 1px black solid;
+	background-image: url(); background-color: darkred;
+}
+#appearance{
+	position: absolute;
+	left: 40%;
+	top: -50%;
+	height: 50%;
+	width: 20%;
+	border: 1px black solid;
+	background-image: url(); background-color: darkred;
+}
+.fadeIn{
+	animation:fadeIn 1s linear;
+}
+.fadeOut{
+
+}
+#menu ul, #class ul, #class h3{
+	list-style-type: none;
+	font-family: pixel;
+	font-size: 40px;
+	text-align: center;
+	padding-left: 0;
+}
+#menu ul li, #class ul li{
+	padding-top: 40px;
+}
+a{
+	color: black;
+	text-decoration: none;
+}
+#gameScreen{
+	position: absolute;
+	left:0;
+	top:0;
+	width: 1082px;
+	height:738px;
+}
+#map{
+}
+#character{
+	position: absolute;
+	height: 40px;
+	width: 40px;
+	top: 400px;
+	left: 400px;
+}
