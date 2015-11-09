@@ -7,7 +7,5 @@ var appearanceMenu = document.getElementById("appearance")
 buttonWarrior.addEventListener('click', function (e) {
 	classMenu.classList.remove('fadeIn');
 	classMenu.classList.add("fadeOut");
-	classMenu.style.top = "50%";
 	appearanceMenu.classList.add("fadeIn");
-	appearanceMenu.style.top = "";
 })
