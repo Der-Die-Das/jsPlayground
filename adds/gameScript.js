@@ -4,7 +4,11 @@ const S_KEY = 83;
 const D_KEY = 68;
 const TILE_SIZE = 10;
 const STEP_SIZE = 10;
+
 var character = document.getElementById("character");
+character.style.top = 60;
+character.style.left = 0;
+
 var walkMatrix = [
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -81,78 +85,52 @@ var walkMatrix = [
 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
-// Valid werte prüfen
-//non-negative, not bigger than max
-/*document.onkeydown = function(event) {
-	if (event.keyCode == A_KEY) {
-		if (walkMatrix[Math.floor(parseInt(pos.style.left) / TILE_SIZE)-1][Math.floor(parseInt(pos.style.top) / TILE_SIZE)] == 0){
-			pos.style.left = (parseInt(pos.style.left) - STEP_SIZE).toString() + "px";
-		}
-	}
-	if (event.keyCode == D_KEY){
-		if (walkMatrix[Math.floor(parseInt(pos.style.left) / TILE_SIZE)+1][Math.floor(parseInt(pos.style.top) / TILE_SIZE)] == 0){
-			pos.style.left = (parseInt(pos.style.left) + STEP_SIZE).toString() + "px";
-		}
-	}
-	if (event.keyCode == W_KEY){
-		if (walkMatrix[Math.floor(parseInt(pos.style.left) / TILE_SIZE)][Math.floor(parseInt(pos.style.top) / TILE_SIZE)-1] == 0){
-			pos.style.top = (parseInt(pos.style.top) - STEP_SIZE).toString() + "px";
-		}
-	}
-	if (event.keyCode == S_KEY){
-		if (walkMatrix[Math.floor(parseInt(pos.style.left) / TILE_SIZE)][Math.floor(parseInt(pos.style.top) / TILE_SIZE)+1] == 0){
-			pos.style.top = (parseInt(pos.style.top) + STEP_SIZE).toString() + "px";
-		}
-	}
-}
-*/
 
-var wKeyDown = 0;
-var aKeyDown = 0;
-var dKeyDown = 0;
-var sKeyDown = 0;
-character.style.top = 0;
-character.style.left = 0;
-
-var posTop = character.style.top;
-var posleft = character.style.left;
-character.style.transition = "all 1s linear";
-
-function move(direction){
-
-	if (direction == W_KEY){
-		character.style.transform = "translateY(" + toString(posTop-STEP_SIZE) + "px)";
-		posTop -=STEP_SIZE;
-	}
-	if (direction == S_KEY){
-		character.style.transform = "translateY(" + toString(posTop+STEP_SIZE) + "px)";
-			posTop +=STEP_SIZE;
-	}
-	if (direction == A_KEY){
-		character.style.transform = "translateX(" + toString(posTop-STEP_SIZE) + "px)";
-		posleft -=STEP_SIZE;
-	}
-	if (direction == D_KEY){
-		character.style.transform = "translateX(" + toString(posTop+STEP_SIZE) + "px)";
-		posleft +=STEP_SIZE;
-	}
-
-}
-
+		// Check valid values
+		// non-negative, not bigger than max
 document.onkeydown = function(event) {
-	if (event.keyCode == W_KEY) {
-		setTimeout(move(W_KEY), 1000);
-	}
-
+	console.log(character.style.left);
+	
 	if (event.keyCode == A_KEY) {
-		setTimeout(move(A_KEY), 1000);
+		var nextLeft = parseInt(character.style.left) - TILE_SIZE; //Where the character will be after the transition
+		if (canWalkTo(nextLeft, parseInt(character.style.top))) {
+			character.style.left = nextLeft.toString() + "px";
+		}
+	} else if (event.keyCode == D_KEY){
+		var nextLeft = parseInt(character.style.left) + TILE_SIZE; 
+		if (canWalkTo(nextLeft, parseInt(character.style.top))) {
+			character.style.left = nextLeft.toString() + "px";
+		}
+	} else if (event.keyCode == W_KEY){
+		var nextTop = parseInt(character.style.top) - TILE_SIZE;	//Where the character will be after the transition
+		if (canWalkTo(parseInt(character.style.left), nextTop)) {
+			character.style.top = nextTop.toString() + "px";
+		}
+	} else if (event.keyCode == S_KEY){
+		var nextTop = parseInt(character.style.top) + TILE_SIZE;
+		if (canWalkTo(parseInt(character.style.left), nextTop)) {
+			character.style.top = nextTop.toString() + "px";
+		}
 	}
+}
 
-	if (event.keyCode == S_KEY) {
-		setTimeout(move(S_KEY), 1000);
-	}
 
-	if (event.keyCode == D_KEY) {
-		setTimeout(move(D_KEY), 1000);
+/**
+ * Checks whether a character can walk to a certain coorinate.
+ *
+ * @param x The x coordinate in pixels
+ * @param y The y coordinate in pixels
+ *
+ * @return true if a character can walk to the given pixels else false.
+ */
+function canWalkTo(x,y) {
+	var yIndexInArray = Math.floor(y / TILE_SIZE);
+	var xIndexInArray = Math.floor(x / TILE_SIZE);
+
+	//Check bounds 
+	if (walkMatrix.length > yIndexInArray && walkMatrix[yIndexInArray].length > xIndexInArray) {
+		return walkMatrix[Math.floor(y / TILE_SIZE)][Math.floor(x / TILE_SIZE)] == 0;
+	} else {
+		return false;
 	}
 }
