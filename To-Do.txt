@@ -1,0 +1,5 @@
+- bewegungs Funktion -> test ob man laufen kann oder nicht: debuggen -> treten fehler auf
+- scan punkt von character in mitte versetzen (game.js von zelda dings  bottom notes)
+	
+	
+	

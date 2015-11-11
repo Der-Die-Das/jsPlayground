@@ -9,6 +9,9 @@
 	from {top:0%; left:40%;}
 	to {top:-50%; left:40%;}
 }
+@-webkit-keyframes up{
+	to {top:top-10px;}
+}
 body{
 	margin: 0;
 	background-image: url(../img/background.jpg);
@@ -43,9 +46,11 @@ body{
 }
 .fadeIn{
 	animation:fadeIn 1s linear;
+	top:0%;
 }
 .fadeOut{
-
+	animation:fadeIn 1s linear;
+	top: -50%;
 }
 #menu ul, #class ul, #class h3{
 	list-style-type: none;
@@ -76,4 +81,7 @@ a{
 	width: 40px;
 	top: 400px;
 	left: 400px;
+}
+.up{
+	animation:up 1s linear;
 }
