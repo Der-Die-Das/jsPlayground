@@ -85,36 +85,55 @@ var walkMatrix = [
 [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 ];
 
-		// Check valid values
-		// non-negative, not bigger than max
-		character.style.transition = "all 100ms linear";
+// Check valid values
+// non-negative, not bigger than max
+const animationDuration = 50;
+character.style.transition = "all "+animationDuration+"ms linear";
+var previousAnimationEnded = true;
+
+character.addEventListener("transitionend",function (e){
+	previousAnimationEnded = true;
+})
+
 document.onkeydown = function(event) {
 	console.log(character.style.left);
-	
-	if (event.keyCode == A_KEY) {
+
+
+	if (event.keyCode == A_KEY){
 		var nextLeft = parseInt(character.style.left) - TILE_SIZE; //Where the character will be after the transition
-		if (canWalkTo(nextLeft, parseInt(character.style.top))) {
-			character.style.left = nextLeft.toString() + "px";
+		if (previousAnimationEnded){
+			previousAnimationEnded = false;
+			if (canWalkTo(nextLeft, parseInt(character.style.top))) {
+				character.style.left = nextLeft.toString() + "px";
+			}
 		}
 	} else if (event.keyCode == D_KEY){
 		var nextLeft = parseInt(character.style.left) + TILE_SIZE; 
-		if (canWalkTo(nextLeft, parseInt(character.style.top))) {
-			character.style.left = nextLeft.toString() + "px";
+		if (previousAnimationEnded){
+			previousAnimationEnded = false;
+			if (canWalkTo(nextLeft, parseInt(character.style.top))) {
+				character.style.left = nextLeft.toString() + "px";
+			}
 		}
 	} else if (event.keyCode == W_KEY){
 		var nextTop = parseInt(character.style.top) - TILE_SIZE;	//Where the character will be after the transition
 		if (canWalkTo(parseInt(character.style.left), nextTop)) {
-			character.style.top = nextTop.toString() + "px";
+			if (previousAnimationEnded){
+				previousAnimationEnded = false;
+				character.style.top = nextTop.toString() + "px";
+			}
 		}
 	} else if (event.keyCode == S_KEY){
 		var nextTop = parseInt(character.style.top) + TILE_SIZE;
 		if (canWalkTo(parseInt(character.style.left), nextTop)) {
-			character.style.top = nextTop.toString() + "px";
+			if (previousAnimationEnded){
+				previousAnimationEnded = false;
+				character.style.top = nextTop.toString() + "px";
+			}
 		}
 	}
+
 }
-
-
 /**
  * Checks whether a character can walk to a certain coorinate.
  *
@@ -123,11 +142,11 @@ document.onkeydown = function(event) {
  *
  * @return true if a character can walk to the given pixels else false.
  */
-function canWalkTo(x,y) {
-	var yIndexInArray = Math.floor(y / TILE_SIZE);
-	var xIndexInArray = Math.floor(x / TILE_SIZE);
-	character.style.height = 40;
-	character.style.width = 40;
+ function canWalkTo(x,y) {
+ 	var yIndexInArray = Math.floor(y / TILE_SIZE);
+ 	var xIndexInArray = Math.floor(x / TILE_SIZE);
+ 	character.style.height = 40;
+ 	character.style.width = 40;
 
 	//Check bounds 
 	if (walkMatrix.length > yIndexInArray && walkMatrix[yIndexInArray].length > xIndexInArray) {
